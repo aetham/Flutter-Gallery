@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "869322070552",
+    "project_id": "fir-gallery-d905a",
+    "storage_bucket": "fir-gallery-d905a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:869322070552:android:9554134a5af782dce1c16d",
+        "android_client_info": {
+          "package_name": "com.example.flutter_gallery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "869322070552-dqqudeo35rgoqhp0a9m1stcgjj1umb2q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAujh6soe-H-JsfDsJYHIdBPGRsqy-ohSY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "869322070552-dqqudeo35rgoqhp0a9m1stcgjj1umb2q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
