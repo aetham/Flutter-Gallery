@@ -7,20 +7,15 @@ import 'package:flutter_gallery/model/firebase_file.dart';
 class FirebaseApi {
 
   static UploadTask? uploadFile(String destination, File file) {
-    try {
       final location = FirebaseStorage.instance.ref(destination);
       return location.putFile(file);
-    } on FirebaseException catch (e) {
-      return null;
-    }
   }
   static Future<List<String>> getLink(List<Reference> refs) =>
       Future.wait(refs.map((ref) => ref.getDownloadURL()).toList());
 
   static Future<List<FirebaseFile>> listAll(String path) async {
-    final location = FirebaseStorage.instance.ref(path);
-    final result = await location.listAll();
-
+    final ref = FirebaseStorage.instance.ref(path);
+    final result = await ref.listAll();
     final urls = await getLink(result.items);
     return urls
         .asMap()
