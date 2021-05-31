@@ -1,7 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+
 import 'UploadPage.dart';
 import 'ViewPage.dart';
 import 'api/firebase_api.dart';
@@ -15,27 +15,10 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  final FirebaseFirestore asb = FirebaseFirestore.instance;
-  final CollectionReference collectionReference = FirebaseFirestore.instance
-      .collection('files/');
 
-  Future<void> listExample() async {
-    firebase_storage.ListResult result = await firebase_storage.FirebaseStorage
-        .instance.ref('files/').listAll();
-    result.items.forEach((firebase_storage.Reference ref) {
-      print('Found file: $ref');
-    });
-  }
 
   void btnOnClick(String btnVal) {
     if (btnVal == "upload") {
-      Navigator.push(
-          context, new MaterialPageRoute(builder: (context) => UploadPage()));
-    }
-  }
-
-  void wuush(String btnVal) {
-    if (btnVal == "acd") {
       Navigator.push(
           context, new MaterialPageRoute(builder: (context) => UploadPage()));
     }
@@ -49,6 +32,24 @@ class _MainPageState extends State<MainPage> {
 
     futureFiles = FirebaseApi.listAll('files/');
   }
+  Widget buildFile(BuildContext context, FirebaseFile file) => ListTile(
+    leading: Image.network(
+      file.url,
+      width: 50,
+      height: 50,
+      fit: BoxFit.cover,
+    ),
+    title: Text(
+      file.name,
+      style: TextStyle(
+        fontWeight: FontWeight.bold,
+        color: Colors.blue,
+      ),
+    ),
+    onTap: () => Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => ViewPage(file: file),
+    )),
+  );
 
   @override
   Widget build(BuildContext context) =>
@@ -64,7 +65,7 @@ class _MainPageState extends State<MainPage> {
                 default:
                   final files = snapshot.data!;
                   return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                   children:[
                     Expanded(
                         child: ListView.builder(
@@ -78,7 +79,6 @@ class _MainPageState extends State<MainPage> {
                     ElevatedButton(
                       onPressed:() {
                         btnOnClick('upload');
-                        listExample();
                       },
                       child: Text(
                           'Add picture'
@@ -90,23 +90,5 @@ class _MainPageState extends State<MainPage> {
             }
             )
       );
-  Widget buildFile(BuildContext context, FirebaseFile file) => ListTile(
-    leading: Image.network(
-      file.url,
-      width: 50,
-      height: 50,
-      fit: BoxFit.cover,
-    ),
-    title: Text(
-          file.name,
-          style: TextStyle(
-        fontWeight: FontWeight.bold,
-        decoration: TextDecoration.underline,
-      color: Colors.blue,
-    ),
-    ),
-    onTap: () => Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => ViewPage(file: file),
-    )),
-  );
+
 }
