@@ -17,6 +17,20 @@ class _UploadPageState extends State<UploadPage> {
   UploadTask? task;
   File? file;
 
+  Future selectFile() async {
+    final result = await FilePicker.platform.pickFiles(allowMultiple: false);
+    if (result == null) return;
+    final path = result.files.single.path!;
+    setState(() => file = File(path));
+  }
+
+  Future uploadFile() async {
+    if (file == null) return;
+    final fileName = basename(file!.path);
+    final destination = 'files/$fileName';
+    task = FirebaseApi.uploadFile(destination, file!);
+  }
+
   @override
   Widget build(BuildContext context) {
     final fileName = file != null ? basename(file!.path) : 'No File Selected';
@@ -35,36 +49,21 @@ class _UploadPageState extends State<UploadPage> {
                 icon: Icons.attach_file,
                 onClicked: selectFile,
               ),
-              SizedBox(height: 8),
+              SizedBox(height: 10),
               Text(
                 fileName,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
               ),
-              SizedBox(height: 48),
+              SizedBox(height: 50),
               ButtonWidget(
                 text: 'Upload File',
                 icon: Icons.cloud_upload_outlined,
                 onClicked: uploadFile,
               ),
-
             ],
           ),
         ),
       ),
     );
-  }
-
-  Future selectFile() async {
-    final result = await FilePicker.platform.pickFiles(allowMultiple: false);
-    if (result == null) return;
-    final path = result.files.single.path!;
-    setState(() => file = File(path));
-  }
-
-  Future uploadFile() async {
-    if (file == null) return;
-    final fileName = basename(file!.path);
-    final destination = 'files/$fileName';
-    task = FirebaseApi.uploadFile(destination, file!);
   }
 }
