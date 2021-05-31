@@ -36,6 +36,7 @@ class _UploadPageState extends State<UploadPage> {
     final fileName = file != null ? basename(file!.path) : 'No File Selected';
     return Scaffold(
       appBar: AppBar(
+        title: Text('Upload a Picture'),
         centerTitle: true,
       ),
       body: Container(
